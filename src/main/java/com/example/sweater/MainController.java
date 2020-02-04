@@ -40,7 +40,7 @@ public class MainController {
         Iterable<Message> messages = filter.isEmpty()
                 ? messagesRepository.findAll()
                 : messagesRepository.findByTag(filter);
-        
+
         model.put("messages", messages);
 
         return "main";
