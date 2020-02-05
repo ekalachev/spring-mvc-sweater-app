@@ -11,6 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="spring-mvc-sweater-app" target="1.8" />
+      <module name="sweater" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
