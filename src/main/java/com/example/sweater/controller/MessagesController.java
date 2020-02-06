@@ -1,10 +1,10 @@
 package com.example.sweater.controller;
 
 import com.example.sweater.domain.Message;
+import com.example.sweater.domain.User;
 import com.example.sweater.repositories.MessagesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -12,8 +12,11 @@ import java.util.Map;
 @Controller
 @RequestMapping("/messages")
 public class MessagesController {
-    @Autowired
-    private MessagesRepository messagesRepository;
+    private final MessagesRepository messagesRepository;
+
+    public MessagesController(MessagesRepository messagesRepository) {
+        this.messagesRepository = messagesRepository;
+    }
 
     @GetMapping
     public String messages(Map<String, Object> model) {
@@ -24,8 +27,13 @@ public class MessagesController {
     }
 
     @PostMapping
-    public String messages(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
-        Message message = new Message(text, tag);
+    public String messages(
+            @AuthenticationPrincipal User user,
+            @RequestParam String text,
+            @RequestParam String tag,
+            Map<String, Object> model
+    ) {
+        Message message = new Message(text, tag, user);
         messagesRepository.save(message);
 
         Iterable<Message> messages = messagesRepository.findAll();
@@ -35,7 +43,10 @@ public class MessagesController {
     }
 
     @PostMapping("filter")
-    public String filter(@RequestParam String filter, Map<String, Object> model){
+    public String filter(
+            @RequestParam String filter,
+            Map<String, Object> model
+    ){
         Iterable<Message> messages = filter.isEmpty()
                 ? messagesRepository.findAll()
                 : messagesRepository.findByTag(filter);
