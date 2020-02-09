@@ -15,6 +15,8 @@ public class Message {
     @JoinColumn(name = "user_id")
     private User author;
 
+    private String filename;
+
     // Entity type needs default constructor
     public Message() {
     }
@@ -59,5 +61,13 @@ public class Message {
 
     public String getAuthorName() {
         return this.author != null ? this.author.getUsername() : "<none>";
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }
