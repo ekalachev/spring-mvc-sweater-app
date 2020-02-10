@@ -1,7 +1,7 @@
 <#import "parts/common.ftlh" as c>
 <@c.page>
 User editor
-<form action="/user" method="post">
+<form action="/users" method="post">
     <input type="text" value="${user.username}" name="username">
     <#list roles as role>
         <div>

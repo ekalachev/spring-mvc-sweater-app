@@ -87,4 +87,8 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public boolean isAdmin() {
+        return this.roles.contains(Role.ADMIN);
+    }
 }
